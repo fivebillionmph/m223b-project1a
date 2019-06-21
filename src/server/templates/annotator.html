@@ -1,0 +1,58 @@
+{% extends "__base.html" %}
+
+{% block title %}
+	Annotator
+{% endblock %}
+
+{% block body %}
+	<div id="app">
+		<div class="row">
+			<div class="col-md-3" style="max-height: 600px; overflow-y: auto">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Has feature</th>
+							<th>Trainable</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="image in images" v-on:click="selectImage(image)">
+							<td>${ image.name }</td>
+							<td>${ sqlIntToString(image.has_feature) }</td>
+							<td v-bind:class="{'bg-primary': image.trainable == 1}">${ sqlIntToString(image.trainable)  }</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-9">
+				<div v-if="selected_image != null">
+					<h4>${ selected_image.name }</h4>
+					Has feature: <strong>${ sqlIntToString(selected_image.has_feature) }</strong>
+					<br/>
+					Is trainable: <strong>${ sqlIntToString(selected_image.trainable) }</strong>
+					<div class="container">
+						<input type="radio" v-model="brush_mode" name="brush-type" value="paint" /> Paint
+						<input type="radio" v-model="brush_mode" name="brush-type" value="erase" /> Erase
+						<br/>
+						Brush size:
+						<input type="radio" v-model="brush_radius" v-on:change="updateBrushSize()" name="brush-radius" value="1" /> 1
+						<input type="radio" v-model="brush_radius" v-on:change="updateBrushSize()" name="brush-radius" value="3" /> 3
+						<input type="radio" v-model="brush_radius" v-on:change="updateBrushSize()" name="brush-radius" value="5" /> 5
+						<input type="radio" v-model="brush_radius" v-on:change="updateBrushSize()" name="brush-radius" value="7" /> 7
+						<br/>
+						<button class="btn btn-success" v-on:click="saveMask(selected_image)">Save</button>
+						<button class="btn btn-danger" v-on:click="deleteMask(selected_image)">Delete mask</button>
+						<button class="btn btn-primary" v-on:click="toggleTrainable(selected_image)" v-show="selected_image.trainable == 0">Make trainable</button>
+						<button class="btn btn-primary" v-on:click="toggleTrainable(selected_image)" v-show="selected_image.trainable == 1">Make not trainable</button>
+					</div>
+				</div>
+				<canvas id="app-canvas"></canvas>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="/static/annotator.js"></script>
+{% endblock %}

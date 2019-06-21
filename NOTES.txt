@@ -1,0 +1,45 @@
+VOCABS:
+
+- batch size
+	number of samples passed into neural network at once
+
+- weight
+	slope or x variable of neuron
+
+- bias
+	y intercept of neuron
+
+- gradient
+
+- cost
+
+- epoch
+	number of times each sample in a training set is seen
+
+- learning rate
+	optimizing for cost function (gradient descent)
+	step size
+
+- optimizer
+	optimizes the learning rate for gradient descent
+	"adam" is an example
+
+- activation function
+	binary outcome should use sigmoid function
+
+- loss function
+	only on last layer?
+	binary should use binary cross entropy
+
+- pooling layer
+	reduce spatial size of conv2d and control overfitting
+
+TIPS:
+
+train on a small subset of the data (20 samples) to make sure it can achieve zero-cost
+
+plot the first layer images.
+
+lung-segmentation to filter lung
+	https://www.kaggle.com/kmader/dsb-lung-segmentation-algorithm
+	https://github.com/topics/lung-segmentation
